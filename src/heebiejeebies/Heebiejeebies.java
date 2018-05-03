@@ -14,8 +14,8 @@ public class Heebiejeebies {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Thread myThread = new ThreadTester();
-        myThread.start();
+        ThreadTester tester = new ThreadTester();
+        tester.run();
     }
     
 }
