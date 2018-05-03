@@ -1,13 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This is a test space for learning the tools that we are going to need for
+ * the new game. God I love having freedom to do stuff like this.
  */
 package heebiejeebies;
 
 /**
  *
- * @author mr_penumbra
+ * @author alec.ewers
  */
 public class Heebiejeebies {
 
@@ -15,9 +14,8 @@ public class Heebiejeebies {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("I am the man!");
-        System.out.println("I am the man! But even more so!");
-        System.out.println("I am the man! But even more so! To the Nth degree!");
+        Thread myThread = new ThreadTester();
+        myThread.start();
     }
     
 }
