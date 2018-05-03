@@ -17,6 +17,7 @@ public class Heebiejeebies {
     public static void main(String[] args) {
         System.out.println("I am the man!");
         System.out.println("I am the man! But even more so!");
+        System.out.println("I am the man! But even more so! To the Nth degree!");
     }
     
 }
