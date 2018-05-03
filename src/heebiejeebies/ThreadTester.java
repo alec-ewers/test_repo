@@ -10,7 +10,12 @@ package heebiejeebies;
  * @author mr_penumbra
  * @Override run() the run method of thread
  */
-public class ThreadTester extends Thread {
+public class ThreadTester implements Runnable {
+    
+    public ThreadTester() { 
+        Thread thread = new Thread(this);
+        thread.start();
+    }
     
     @Override
     public void run() {
