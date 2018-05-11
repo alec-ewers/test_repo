@@ -15,6 +15,7 @@ public class Heebiejeebies {
      */
     public static void main(String[] args) {
         ThreadTester tester = new ThreadTester();
+        tester.run();
     }
     
 }
