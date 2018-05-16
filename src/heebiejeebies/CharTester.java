@@ -7,12 +7,28 @@
 
 package heebiejeebies;
 
+import java.awt.*;
+import javax.swing.*;
+
 /**
  *
  * @author alec.ewers
  */
-public class CharTester {
+public class CharTester extends JComponent {
 
+    @Override
+    public void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        
+        Image ted = Toolkit.getDefaultToolkit().getImage("char.png");
+        
+        g2.drawImage(ted, 75, 75, this);
+        
+        g2.finalize();
+        
+        //g2.drawImage(ted, 10, 10, this);
+        //g2.finalize();
+    }
     
     
 }

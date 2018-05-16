@@ -15,12 +15,21 @@ import javax.swing.*;
  */
 public class WordFrame extends JFrame {
     
-    public WordFrame() {
+    public WordFrame(int init) {
         setTitle("I hate this parent/child heirarchy crap.");
         setSize(640, 480);
         
-        ComponentTester tester = new ComponentTester();
-        add(tester);
+        if (init % 2 == 0) {
+            CharTester test = new CharTester();
+            add(test);
+        }else if (init % 2 == 1) {
+            ComponentTester tester = new ComponentTester();
+            add(tester);
+        }
+        //ComponentTester tester = new ComponentTester();
+        ////CharTester test = new CharTester();
+        //add(tester);
+        ////add(test);
     }
 
 }
