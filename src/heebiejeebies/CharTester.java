@@ -1,4 +1,4 @@
-/*
+ /*
  * This code was written by Alec Ewers, whether he's proud of it
  * or not. It is distributed freely so long as you include this
  * header and give what you think is appropriate credit.
@@ -25,9 +25,6 @@ public class CharTester extends JComponent {
         g2.drawImage(ted, 75, 75, this);
         
         g2.finalize();
-        
-        //g2.drawImage(ted, 10, 10, this);
-        //g2.finalize();
     }
     
     

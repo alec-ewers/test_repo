@@ -21,12 +21,15 @@ public class ComponentTester extends JComponent {
         Graphics2D g2 = (Graphics2D) g;
         
         Image ted = Toolkit.getDefaultToolkit().getImage("backblock.png");
+        Image jeff = Toolkit.getDefaultToolkit().getImage("char.png");
         
         for (int I = 0; I < 640/64 + 1; I++) {
             for (int J = 0; J < 480/64 + 1; J++) {
                 g2.drawImage(ted, I * 64, J * 64, this);
             }
         }
+        
+        g2.drawImage(jeff, 75, 75, this);
 
         g2.finalize();
         

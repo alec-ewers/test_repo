@@ -18,16 +18,18 @@ public class Heebiejeebies {
      */
     public static void main(String[] args) {
         
+      
+        
         EventQueue.invokeLater(new Runnable() {
             
             @Override
             public void run() {
-                WordFrame tester = new WordFrame(2);
+                //WordFrame tester = new WordFrame(2);
                 WordFrame test = new WordFrame(3);
                 test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                tester.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                //tester.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 test.setVisible(true);
-                tester.setVisible(true);
+                //tester.setVisible(true);
             } 
             
         });
@@ -35,5 +37,7 @@ public class Heebiejeebies {
         
         
     }
+    
+    
     
 }
