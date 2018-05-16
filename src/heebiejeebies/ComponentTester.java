@@ -18,7 +18,20 @@ public class ComponentTester extends JComponent {
     
     @Override
     public void paintComponent(Graphics g) {
-        g.drawString("I am that I will.", MessageX, MessageY);
+        Graphics2D g2 = (Graphics2D) g;
+        
+        Image ted = Toolkit.getDefaultToolkit().getImage("backblock.png");
+        
+        for (int I = 0; I < 640/64 + 1; I++) {
+            for (int J = 0; J < 480/64 + 1; J++) {
+                g2.drawImage(ted, I * 64, J * 64, this);
+            }
+        }
+
+        g2.finalize();
+        
+        //g2.drawImage(ted, 10, 10, this);
+        //g2.finalize();
     }
     
     private int MessageX = 75;

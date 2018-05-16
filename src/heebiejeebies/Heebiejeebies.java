@@ -28,18 +28,7 @@ public class Heebiejeebies {
             } 
             
         });
-        
-//        JFrame JFrame1 = new JFrame();
-//        JFrame1.setSize(800, 600);
-//        JFrame1.setLocation(125, 90);
-//        JFrame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        
-//        Container content = JFrame1.getContentPane();
-//        ComponentTester component = new ComponentTester();
-//        
-//        JFrame1.add(content);
-//        
-//        JFrame1.setVisible(true);
+       
     }
     
 }
