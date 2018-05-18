@@ -6,6 +6,7 @@ package heebiejeebies;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 /**
  *
@@ -51,7 +52,7 @@ class ComponentTester extends JComponent {
             }
         }
         
-        g2.drawImage(jeff, 75, 75, this);
+        g2.drawImage(jeff, X, Y, this);
 
         g2.finalize();
         
@@ -59,8 +60,16 @@ class ComponentTester extends JComponent {
         //g2.finalize();
     }
     
-    private int MessageX = 75;
-    private int MessageY = 100;
+    public void setX(int x) {
+        X = x;
+    }
+    
+    public void setY(int y) {
+        Y = y;
+    }
+    
+    private int X = 75;
+    private int Y = 100;
 
 }
 
@@ -83,4 +92,19 @@ class WordFrame extends JFrame {
         ////add(test);
     }
 
+}
+
+class listening implements KeyListener {
+    
+    @Override
+    public void keyPressed(KeyEvent ke) {
+        int key = ke.getKeyCode();
+        switch (key) {
+            case (key == KeyEvent.VK_LEFT) {
+                
+            }
+        }
+             
+        
+    }
 }
