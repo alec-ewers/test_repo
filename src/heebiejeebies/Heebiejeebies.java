@@ -221,7 +221,6 @@ class listening implements KeyListener {
                 //System.out.println("Try to keep up!");
             } else if (key == KeyEvent.VK_E) {
                 ComponentTester.setYPos(ComponentTester.getYPos() - 5);
-                //System.out.println("Try to keep up!");
                 ComponentTester.setMenu(true);
             }
         } else if (ComponentTester.getMenu() == true) {
