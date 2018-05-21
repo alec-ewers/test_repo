@@ -110,16 +110,16 @@ class listening implements KeyListener {
         
         if (key == KeyEvent.VK_LEFT) {
             ComponentTester.setXPos(ComponentTester.getXPos() - 5);
-            System.out.println("We have left-off!");
+            //System.out.println("We have left-off!");
         } else if (key == KeyEvent.VK_RIGHT) {
             ComponentTester.setXPos(ComponentTester.getXPos() + 5);
-            System.out.println("It's a right-off!");
+            //System.out.println("It's a right-off!");
         } else if (key == KeyEvent.VK_DOWN) {
             ComponentTester.setYPos(ComponentTester.getYPos() + 5);
-            System.out.println("You're getting me down!");
+            //System.out.println("You're getting me down!");
         } else if (key == KeyEvent.VK_UP) {
             ComponentTester.setYPos(ComponentTester.getYPos() - 5);
-            System.out.println("Try to keep up!");
+            //System.out.println("Try to keep up!");
         }
     }
 }
