@@ -7,6 +7,9 @@ package heebiejeebies;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  *
@@ -26,6 +29,15 @@ public class Heebiejeebies {
     }
 }
 
+
+//It goes kind of like this:
+//You start able to move around.
+//You can enter a menu with e.
+//while in the menu, pressing a button will skip dialog.
+//when encountering a proper menu, up and down will ove the cursor.
+//e will select.
+//press x to return to movement.
+
 class ComponentTester extends JComponent {
     
     @Override
@@ -43,6 +55,19 @@ class ComponentTester extends JComponent {
         }
         
         g2.drawImage(rob, 0, 480-150, this);
+        
+        String content = reader.getRead();
+        int dialogPos = 0;
+        
+        for (String I : content.split("\n")) {
+            if (I.contains("/'/")) {
+                for (String J : I.split("/'/")) {
+                    g2.drawString(J, 50, 340 + dialogPos * 25);
+                }
+            } else {
+                g2.drawString(I, 35, 340);
+            }
+        }
         
         g2.drawImage(jeff, X, Y, this);
         
@@ -99,12 +124,46 @@ class ComponentTester extends JComponent {
         isNext = newFollow;
     }
     
+    public static void setCursPos(int y) {
+        if (cursPos + y != -1 || cursPos + y != maxPos + 1) {
+            cursPos += y;
+        }
+    }
+    
+    public static int getCursPos() {
+        return cursPos;
+    }
+    
+    public static void setMaxPos(int y) {
+        maxPos = y;
+    }
+    
+    public static int getMaxPos() {
+        return maxPos;
+    }
+    
     private static boolean isMenu = false;
     private static boolean isNext = false;
     private static boolean isSpeaking = false;
     private static int X = 75;
     private static int Y = 100;
+    private static int cursPos = 0;
+    private static int maxPos;
 
+}
+
+class reader {
+    
+    private static String content;
+    
+    public static void read(String target) throws IOException {
+        String continent = new String(Files.readAllBytes(Paths.get(target + ".txt")));
+        content = continent;
+    }
+    
+    public static String getRead() {
+        return content;
+    }
 }
 
 class WordFrame extends JFrame {
@@ -161,7 +220,13 @@ class listening implements KeyListener {
                 if (key != 0) {
                     ComponentTester.setNext(true);
                 }
-            } else if (ComponentTester.getNext)
+            } else if (ComponentTester.getSpeaking() == false) {
+                if (key == KeyEvent.VK_UP) {
+                    ComponentTester.setCursPos(1);
+                } else if (key == KeyEvent.VK_UP) {
+                    ComponentTester.setCursPos(-1);
+                }
+            }
         }
     }
 }
