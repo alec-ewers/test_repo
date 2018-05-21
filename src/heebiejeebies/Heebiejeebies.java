@@ -19,15 +19,20 @@ public class Heebiejeebies {
     
     /**
      * @param args the command line arguments
-     * @throws java.lang.InterruptedException
      */
-    public static void main(String[] args) throws InterruptedException{
-        WordFrame test = new WordFrame();
-        test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        test.setVisible(true);
+    public static void main(String[] args) {
         
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                WordFrame test = new WordFrame();
+                test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                test.setVisible(true);
+            }
+        });
     }
-}
+        
+ }
 
 
 //It goes kind of like this:
@@ -47,6 +52,7 @@ class ComponentTester extends JComponent {
         Image ted = Toolkit.getDefaultToolkit().getImage("backblock.png");
         Image jeff = Toolkit.getDefaultToolkit().getImage("char.png");
         Image rob = Toolkit.getDefaultToolkit().getImage("textBox.png");
+        Image bob = Toolkit.getDefaultToolkit().getImage("cursor.png");
         
         for (int I = 0; I < 640/64 + 1; I++) {
             for (int J = 0; J < 480/64 + 1; J++) {
@@ -63,11 +69,14 @@ class ComponentTester extends JComponent {
             if (I.contains("/'/")) {
                 for (String J : I.split("/'/")) {
                     g2.drawString(J, 50, 340 + dialogPos * 25);
+                    ComponentTester.setMaxPos(ComponentTester.getMaxPos() + 1);
                 }
             } else {
                 g2.drawString(I, 35, 340);
             }
         }
+        
+        g2.drawImage(bob, 35, ComponentTester.getCursPos() * 25, this);
         
         g2.drawImage(jeff, X, Y, this);
         
