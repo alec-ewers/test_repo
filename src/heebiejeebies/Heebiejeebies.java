@@ -23,41 +23,7 @@ public class Heebiejeebies {
         test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         test.setVisible(true);
         
-        frameThread FThread = new frameThread(test);
-        
-        while (1==1) {
-            FThread.sleep(100);
-            
-            FThread.run();
-        }
     }
-}
-
-class frameThread extends Thread {
-    
-    private WordFrame hold;
-    private int X;
-    private int oldX;
-    private int Y;
-    private int oldY;
-    
-    public frameThread(WordFrame frame) {
-        hold = frame;
-    }
-    
-    @Override
-    public void run() {
-        X = ComponentTester.getXPos();
-        Y = ComponentTester.getYPos();
-        
-        if (X != oldX || Y != oldY) {
-            hold.repaint();
-        }
-        
-        oldX = X;
-        oldY = Y;
-    }
-    
 }
 
 class ComponentTester extends JComponent {
@@ -76,9 +42,14 @@ class ComponentTester extends JComponent {
         }
         
         g2.drawImage(jeff, X, Y, this);
-
-        g2.finalize();
         
+        try {
+            Thread.sleep(16);
+        } catch (InterruptedException e) {
+            
+        }
+        
+        repaint();
         //g2.drawImage(ted, 10, 10, this);
         //g2.finalize();
     }
@@ -114,25 +85,12 @@ class WordFrame extends JFrame {
         setTitle("I hate this parent/child heirarchy crap.");
         setSize(640, 480);
         
-        CharTester test  = new CharTester();
+        addKeyListener(new listening());
+        
+        ComponentTester test  = new ComponentTester();
         add(test);
         
     }
-    
-    public void handleKeyPush(KeyEvent ke) {
-        int key = ke.getKeyCode();
-        
-        switch (key) {
-            case KeyEvent.VK_LEFT :
-                ComponentTester.setXPos(ComponentTester.getXPos() - 5);
-            case KeyEvent.VK_RIGHT :
-                ComponentTester.setXPos(ComponentTester.getXPos() + 5);
-            case KeyEvent.VK_DOWN :
-                ComponentTester.setYPos(ComponentTester.getYPos() - 5);
-            case KeyEvent.VK_UP :
-                ComponentTester.setYPos(ComponentTester.getYPos() + 5);
-        }
-    } 
 }
 
 class listening implements KeyListener {
@@ -149,15 +107,19 @@ class listening implements KeyListener {
     @Override
     public void keyPressed(KeyEvent ke) {
         int key = ke.getKeyCode();
-        switch (key) {
-            case KeyEvent.VK_LEFT :
-                ComponentTester.setXPos(ComponentTester.getXPos() - 5);
-            case KeyEvent.VK_RIGHT :
-                ComponentTester.setXPos(ComponentTester.getXPos() + 5);
-            case KeyEvent.VK_DOWN :
-                ComponentTester.setYPos(ComponentTester.getYPos() - 5);
-            case KeyEvent.VK_UP :
-                ComponentTester.setYPos(ComponentTester.getYPos() + 5);
+        
+        if (key == KeyEvent.VK_LEFT) {
+            ComponentTester.setXPos(ComponentTester.getXPos() - 5);
+            System.out.println("We have left-off!");
+        } else if (key == KeyEvent.VK_RIGHT) {
+            ComponentTester.setXPos(ComponentTester.getXPos() + 5);
+            System.out.println("It's a right-off!");
+        } else if (key == KeyEvent.VK_DOWN) {
+            ComponentTester.setYPos(ComponentTester.getYPos() + 5);
+            System.out.println("You're getting me down!");
+        } else if (key == KeyEvent.VK_UP) {
+            ComponentTester.setYPos(ComponentTester.getYPos() - 5);
+            System.out.println("Try to keep up!");
         }
     }
 }
