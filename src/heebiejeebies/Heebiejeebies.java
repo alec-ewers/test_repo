@@ -62,6 +62,12 @@ class ComponentTester extends JComponent {
         
         g2.drawImage(rob, 0, 480-150, this);
         
+        try {
+            reader.read("menutest");
+        } catch (IOException e) {
+            
+        }
+        
         String content = reader.getRead();
         int dialogPos = 0;
         
