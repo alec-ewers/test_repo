@@ -70,19 +70,26 @@ class ComponentTester extends JComponent {
         
         String content = reader.getRead();
         int dialogPos = 0;
+        ComponentTester.setNext(true);
         
         for (String I : content.split("\n")) {
-            if (I.contains("/'/")) {
-                for (String J : I.split("/'/")) {
-                    g2.drawString(J, 50, 340 + dialogPos * 25);
-                    ComponentTester.setMaxPos(ComponentTester.getMaxPos() + 1);
+            if (ComponentTester.getNext() == true) {
+                if (I.contains("/'/")) {
+                    for (String J : I.split("/'/")) {
+                        g2.drawString(J, 50, 350 + dialogPos * 25);
+                        dialogPos++;
+                        ComponentTester.setMaxPos(ComponentTester.getMaxPos() + 1);
+                    }
+                } else {
+                    g2.drawString(I, 35, 340);
                 }
-            } else {
-                g2.drawString(I, 35, 340);
             }
+            ComponentTester.setNext(false);
         }
         
-        g2.drawImage(bob, 35, 480-175 + ComponentTester.getCursPos() * 25, this);
+        if (ComponentTester.getMenu() == true) {
+            g2.drawImage(bob, 35, 480-165 + ComponentTester.getCursPos() * 25, this);
+        }
         
         g2.drawImage(jeff, X, Y, this);
         
@@ -235,10 +242,12 @@ class listening implements KeyListener {
                     ComponentTester.setNext(true);
                 }
             } else if (ComponentTester.getSpeaking() == false) {
-                if (key == KeyEvent.VK_UP) {
-                    ComponentTester.setCursPos(1);
-                } else if (key == KeyEvent.VK_UP) {
+                if (key == KeyEvent.VK_DOWN) {
                     ComponentTester.setCursPos(-1);
+                } else if (key == KeyEvent.VK_UP) {
+                    ComponentTester.setCursPos(1);
+                } else if (key == KeyEvent.VK_X) {
+                    ComponentTester.setMenu(false);
                 }
             }
         }
