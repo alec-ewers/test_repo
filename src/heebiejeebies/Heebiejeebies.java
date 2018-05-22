@@ -82,7 +82,7 @@ class ComponentTester extends JComponent {
             }
         }
         
-        g2.drawImage(bob, 35, ComponentTester.getCursPos() * 25, this);
+        g2.drawImage(bob, 35, 480-175 + ComponentTester.getCursPos() * 25, this);
         
         g2.drawImage(jeff, X, Y, this);
         
