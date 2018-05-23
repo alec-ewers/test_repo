@@ -92,6 +92,8 @@ class ComponentTester extends JComponent {
         String I = hold[ComponentTester.getSpeechPos()];
         if (I.contains("/'/")) {
             int L = 0;
+            ComponentTester.setMaxPos(Character.getNumericValue(
+                    I.charAt(0)));
             for (String J : I.split("/'/")) {
                 for (String K : J.split("_")) {
                     if (L % 2 != 1) {
@@ -99,15 +101,11 @@ class ComponentTester extends JComponent {
                             g2.drawString(K.substring(1), 50, 360 
                                     + dialogPos * 25);
                             dialogPos++;
-                            ComponentTester.setMaxPos(
-                                    ComponentTester.getMaxPos() + 1);
                             ComponentTester.setMenu(true);
                             L++;
                         } else {
                             g2.drawString(K, 50, 360 + dialogPos * 25);
                             dialogPos++;
-                            ComponentTester.setMaxPos(
-                                    ComponentTester.getMaxPos() + 1);
                             ComponentTester.setMenu(true);
                             L++;
                         }
@@ -180,7 +178,7 @@ class ComponentTester extends JComponent {
     }
     
     public static void setCursPos(int y) {
-        if (cursPos + y != -1 && cursPos + y != maxPos + 1) {
+        if (cursPos + y != -1 && cursPos + y != maxPos) {
             cursPos += y;
         }
     }
@@ -265,6 +263,7 @@ class listening implements KeyListener {
         if (ComponentTester.getSpeaking() == true) {
             if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_ENTER) {
                 ComponentTester.setNext(true);
+                ComponentTester.setSpeaking(false);
             }
         } else if (ComponentTester.getSpeaking() == false) {
             if (key == KeyEvent.VK_UP) {
@@ -275,6 +274,7 @@ class listening implements KeyListener {
                 ComponentTester.setMenu(false);
             } else if (ComponentTester.getMenu() == true && 
                     key == KeyEvent.VK_ENTER) {
+                ComponentTester.setMenu(false);
                 System.out.println(ComponentTester.getOutputs(
                         ComponentTester.getCursPos()));
                 ComponentTester.setNext(true);
