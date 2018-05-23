@@ -75,49 +75,56 @@ class ComponentTester extends JComponent {
             
         }
         
+        iteration++;
+        
         String content = reader.getRead();
         int dialogPos = 0;
-        ComponentTester.setNext(true);
         
         String[] hold = reader.getReadList();
-        String I = hold[ComponentTester.getSpeechPos()];
+        
         if (ComponentTester.getNext() == true) {
-            if (I.contains("/'/")) {
-                int L = 0;
-                for (int J = 0; J < Character.getNumericValue(I.charAt(0)); 
-                        J++) {
-                    for (String K : I.split("_")) {
-                        if (L % 2 != 1) {
-                            if (L == 0) {
-                                g2.drawString(K.substring(1), 50, 360 
-                                        + dialogPos * 25);
-                                dialogPos++;
-                                ComponentTester.setMaxPos(
-                                        ComponentTester.getMaxPos() + 1);
-                                ComponentTester.setMenu(true);
-                                L++;
-                            } else {
-                                g2.drawString(K, 50, 360 + dialogPos * 25);
-                                dialogPos++;
-                                ComponentTester.setMaxPos(
-                                        ComponentTester.getMaxPos() + 1);
-                                ComponentTester.setMenu(true);
-                                L++;
-                            }
+            ComponentTester.setSpeechPos(ComponentTester.getSpeechPos() + 1 <= 
+                    hold.length - 1 ? 
+                    ComponentTester.getSpeechPos() + 1 : 
+                    ComponentTester.getSpeechPos());
+        }
+        
+        String I = hold[ComponentTester.getSpeechPos()];
+        if (I.contains("/'/")) {
+            int L = 0;
+            for (String J : I.split("/'/")) {
+                for (String K : J.split("_")) {
+                    if (L % 2 != 1) {
+                        if (L == 0) {
+                            g2.drawString(K.substring(1), 50, 360 
+                                    + dialogPos * 25);
+                            dialogPos++;
+                            ComponentTester.setMaxPos(
+                                    ComponentTester.getMaxPos() + 1);
+                            ComponentTester.setMenu(true);
+                            L++;
                         } else {
-                            outputs.add(K);
+                            g2.drawString(K, 50, 360 + dialogPos * 25);
+                            dialogPos++;
+                            ComponentTester.setMaxPos(
+                                    ComponentTester.getMaxPos() + 1);
+                            ComponentTester.setMenu(true);
                             L++;
                         }
+                    } else {
+                        outputs.add(K);
+                        L++;
                     }
                 }
-            } else {
-                g2.drawString(I, 35, 360);
             }
+        } else {
+            g2.drawString(I, 35, 360);
+            ComponentTester.setSpeaking(true);
         }
         ComponentTester.setNext(false);
         
         if (ComponentTester.getMenu() == true) {
-            g2.drawImage(bob, 35, 360 + ComponentTester.getCursPos() * 25, 
+            g2.drawImage(bob, 35, 350 + ComponentTester.getCursPos() * 25, 
                     this);
         }
         
@@ -235,7 +242,7 @@ class reader {
         return content;
     }
     
-    public static String [] getReadList() {
+    public static String [] getReadList() { 
         return parts.toArray(new String[parts.size()]);
     }
 }
