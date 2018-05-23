@@ -77,7 +77,6 @@ class ComponentTester extends JComponent {
         
         iteration++;
         
-        String content = reader.getRead();
         int dialogPos = 0;
         
         String[] hold = reader.getReadList();
