@@ -20,17 +20,17 @@ public class CharTester {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                WordFrame test = new WordFrame();
-                test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                test.setVisible(true);
-            }
-        });
-    }
+//    public static void main(String[] args) {
+//        
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                WordFrame test = new WordFrame();
+//                test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                test.setVisible(true);
+//            }
+//        });
+//    }
         
  }
 

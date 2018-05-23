@@ -70,7 +70,7 @@ class ComponentTester extends JComponent {
         g2.drawImage(rob, 0, 480-150, this);
         
         try {
-            reader.read("menutest");
+            reader.read("menutest", iteration);
         } catch (IOException e) {
             
         }
@@ -79,33 +79,46 @@ class ComponentTester extends JComponent {
         int dialogPos = 0;
         ComponentTester.setNext(true);
         
-        for (String I : content.split("\n")) {
-            if (ComponentTester.getNext() == true) {
-                if (I.contains("/'/")) {
-                    int L = 0;
-                    for (int J = 0; J < Integer.parseInt(I.charAt(0)); J++) {
-                        for (String K : I.split("_")) {
-                            if (L % 2 != 1) {
-                                g2.drawString(K, 50, 360 + dialogPos * 25);
+        String[] hold = reader.getReadList();
+        String I = hold[ComponentTester.getSpeechPos()];
+        if (ComponentTester.getNext() == true) {
+            if (I.contains("/'/")) {
+                int L = 0;
+                for (int J = 0; J < Character.getNumericValue(I.charAt(0)); 
+                        J++) {
+                    for (String K : I.split("_")) {
+                        if (L % 2 != 1) {
+                            if (L == 0) {
+                                g2.drawString(K.substring(1), 50, 360 
+                                        + dialogPos * 25);
                                 dialogPos++;
-                                ComponentTester.setMaxPos(ComponentTester.getMaxPos() + 1);
+                                ComponentTester.setMaxPos(
+                                        ComponentTester.getMaxPos() + 1);
                                 ComponentTester.setMenu(true);
                                 L++;
                             } else {
-                                outputs.add(K);
+                                g2.drawString(K, 50, 360 + dialogPos * 25);
+                                dialogPos++;
+                                ComponentTester.setMaxPos(
+                                        ComponentTester.getMaxPos() + 1);
+                                ComponentTester.setMenu(true);
                                 L++;
                             }
+                        } else {
+                            outputs.add(K);
+                            L++;
                         }
                     }
-                } else {
-                    g2.drawString(I, 35, 360);
                 }
+            } else {
+                g2.drawString(I, 35, 360);
             }
-            ComponentTester.setNext(false);
         }
+        ComponentTester.setNext(false);
         
         if (ComponentTester.getMenu() == true) {
-            g2.drawImage(bob, 35, 360 + ComponentTester.getCursPos() * 25, this);
+            g2.drawImage(bob, 35, 360 + ComponentTester.getCursPos() * 25, 
+                    this);
         }
         
         try {
@@ -181,6 +194,14 @@ class ComponentTester extends JComponent {
         return outputs.get(index);
     }
     
+    public static void setSpeechPos(int y) {
+        speechPos = y;
+    }
+    
+    public static int getSpeechPos() {
+        return speechPos;
+    }
+    
     private static ArrayList<String> outputs = new ArrayList<>(); 
     private static boolean isMenu = false;
     private static boolean isNext = false;
@@ -189,23 +210,36 @@ class ComponentTester extends JComponent {
     private static int Y = 100;
     private static int cursPos = 0;
     private static int maxPos = 0;
+    private static int speechPos = 0;
+    private static int iteration = 0;
 
 }
 
 class reader {
     
     private static String content;
+    private static ArrayList<String> parts = new ArrayList<>();
     
-    public static void read(String target) throws IOException {
-        String continent = new String(Files.readAllBytes(Paths.get(target + ".txt")));
-        content = continent;
+    public static void read(String target, int iteration) throws IOException {
+        if (iteration == 0) {
+            String continent = new String(Files.readAllBytes(Paths.get(target 
+                    + ".txt")));
+            content = continent;
+            for (String I: content.split("\n")) {
+                parts.add(I);
+            }
+        }
     }
     
     public static String getRead() {
         return content;
     }
+    
+    public static String [] getReadList() {
+        return parts.toArray(new String[parts.size()]);
+    }
 }
-true
+
 class listening implements KeyListener {
     
     //included for functionality's sake
@@ -222,7 +256,7 @@ class listening implements KeyListener {
         int key = ke.getKeyCode();
 
         if (ComponentTester.getSpeaking() == true) {
-            if (key != 0) {
+            if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_ENTER) {
                 ComponentTester.setNext(true);
             }
         } else if (ComponentTester.getSpeaking() == false) {
