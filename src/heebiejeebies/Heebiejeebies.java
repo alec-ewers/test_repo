@@ -10,6 +10,7 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 /**
  *
@@ -34,6 +35,20 @@ public class Heebiejeebies {
         
  }
 
+class WordFrame extends JFrame {
+    
+    public WordFrame() {
+        
+        setTitle("I hate this parent/child heirarchy crap.");
+        setSize(640, 480);
+        
+        addKeyListener(new listening());
+        
+        ComponentTester test  = new ComponentTester();
+        add(test);
+        
+    }
+}
 
 //It goes kind of like this:
 //You start able to move around.
@@ -49,17 +64,9 @@ class ComponentTester extends JComponent {
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         
-        Image ted = Toolkit.getDefaultToolkit().getImage("backblock.png");
-        Image jeff = Toolkit.getDefaultToolkit().getImage("char.png");
         Image rob = Toolkit.getDefaultToolkit().getImage("textBox.png");
         Image bob = Toolkit.getDefaultToolkit().getImage("cursor.png");
-        
-        for (int I = 0; I < 640/64 + 1; I++) {
-            for (int J = 0; J < 480/64 + 1; J++) {
-                g2.drawImage(ted, I * 64, J * 64, this);
-            }
-        }
-        
+
         g2.drawImage(rob, 0, 480-150, this);
         
         try {
@@ -75,23 +82,31 @@ class ComponentTester extends JComponent {
         for (String I : content.split("\n")) {
             if (ComponentTester.getNext() == true) {
                 if (I.contains("/'/")) {
-                    for (String J : I.split("/'/")) {
-                        g2.drawString(J, 50, 350 + dialogPos * 25);
-                        dialogPos++;
-                        ComponentTester.setMaxPos(ComponentTester.getMaxPos() + 1);
+                    int L = 0;
+                    for (int J = 0; J < Integer.parseInt(I.charAt(0)); J++) {
+                        for (String K : I.split("_")) {
+                            if (L % 2 != 1) {
+                                g2.drawString(K, 50, 360 + dialogPos * 25);
+                                dialogPos++;
+                                ComponentTester.setMaxPos(ComponentTester.getMaxPos() + 1);
+                                ComponentTester.setMenu(true);
+                                L++;
+                            } else {
+                                outputs.add(K);
+                                L++;
+                            }
+                        }
                     }
                 } else {
-                    g2.drawString(I, 35, 340);
+                    g2.drawString(I, 35, 360);
                 }
             }
             ComponentTester.setNext(false);
         }
         
         if (ComponentTester.getMenu() == true) {
-            g2.drawImage(bob, 35, 480-165 + ComponentTester.getCursPos() * 25, this);
+            g2.drawImage(bob, 35, 360 + ComponentTester.getCursPos() * 25, this);
         }
-        
-        g2.drawImage(jeff, X, Y, this);
         
         try {
             Thread.sleep(16);
@@ -100,8 +115,6 @@ class ComponentTester extends JComponent {
         }
         
         repaint();
-        //g2.drawImage(ted, 10, 10, this);
-        //g2.finalize();
     }
     
     //turns out that the JComponent class 
@@ -147,7 +160,7 @@ class ComponentTester extends JComponent {
     }
     
     public static void setCursPos(int y) {
-        if (cursPos + y != -1 || cursPos + y != maxPos + 1) {
+        if (cursPos + y != -1 && cursPos + y != maxPos + 1) {
             cursPos += y;
         }
     }
@@ -164,13 +177,18 @@ class ComponentTester extends JComponent {
         return maxPos;
     }
     
+    public static String getOutputs(int index) {
+        return outputs.get(index);
+    }
+    
+    private static ArrayList<String> outputs = new ArrayList<>(); 
     private static boolean isMenu = false;
     private static boolean isNext = false;
     private static boolean isSpeaking = false;
     private static int X = 75;
     private static int Y = 100;
     private static int cursPos = 0;
-    private static int maxPos;
+    private static int maxPos = 0;
 
 }
 
@@ -187,23 +205,7 @@ class reader {
         return content;
     }
 }
-
-class WordFrame extends JFrame {
-    
-    public WordFrame() {
-        dispose();
-        
-        setTitle("I hate this parent/child heirarchy crap.");
-        setSize(640, 480);
-        
-        addKeyListener(new listening());
-        
-        ComponentTester test  = new ComponentTester();
-        add(test);
-        
-    }
-}
-
+true
 class listening implements KeyListener {
     
     //included for functionality's sake
@@ -218,37 +220,23 @@ class listening implements KeyListener {
     @Override
     public void keyPressed(KeyEvent ke) {
         int key = ke.getKeyCode();
-        
-        if (ComponentTester.getMenu() == false) {
-            if (key == KeyEvent.VK_LEFT) {
-                ComponentTester.setXPos(ComponentTester.getXPos() - 5);
-                //System.out.println("We have left-off!");
-            } else if (key == KeyEvent.VK_RIGHT) {
-                ComponentTester.setXPos(ComponentTester.getXPos() + 5);
-                //System.out.println("It's a right-off!");
-            } else if (key == KeyEvent.VK_DOWN) {
-                ComponentTester.setYPos(ComponentTester.getYPos() + 5);
-                //System.out.println("You're getting me down!");
-            } else if (key == KeyEvent.VK_UP) {
-                ComponentTester.setYPos(ComponentTester.getYPos() - 5);
-                //System.out.println("Try to keep up!");
-            } else if (key == KeyEvent.VK_E) {
-                ComponentTester.setYPos(ComponentTester.getYPos() - 5);
-                ComponentTester.setMenu(true);
+
+        if (ComponentTester.getSpeaking() == true) {
+            if (key != 0) {
+                ComponentTester.setNext(true);
             }
-        } else if (ComponentTester.getMenu() == true) {
-            if (ComponentTester.getSpeaking() == true) {
-                if (key != 0) {
-                    ComponentTester.setNext(true);
-                }
-            } else if (ComponentTester.getSpeaking() == false) {
-                if (key == KeyEvent.VK_DOWN) {
-                    ComponentTester.setCursPos(-1);
-                } else if (key == KeyEvent.VK_UP) {
-                    ComponentTester.setCursPos(1);
-                } else if (key == KeyEvent.VK_X) {
-                    ComponentTester.setMenu(false);
-                }
+        } else if (ComponentTester.getSpeaking() == false) {
+            if (key == KeyEvent.VK_UP) {
+                ComponentTester.setCursPos(-1);
+            } else if (key == KeyEvent.VK_DOWN) {
+                ComponentTester.setCursPos(1);
+            } else if (key == KeyEvent.VK_X) {
+                ComponentTester.setMenu(false);
+            } else if (ComponentTester.getMenu() == true && 
+                    key == KeyEvent.VK_ENTER) {
+                System.out.println(ComponentTester.getOutputs(
+                        ComponentTester.getCursPos()));
+                ComponentTester.setNext(true);
             }
         }
     }
