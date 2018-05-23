@@ -134,24 +134,6 @@ class ComponentTester extends JComponent {
         repaint();
     }
     
-    //turns out that the JComponent class 
-    
-    public static void setXPos(int x) {
-        X = x;
-    }
-    
-    public static int getXPos() {
-        return X;
-    }
-    
-    public static void setYPos(int y) {
-        Y = y;
-    }
-    
-    public static int getYPos() {
-        return Y;
-    }
-    
     public static boolean getMenu() {
         return isMenu;
     }
@@ -210,8 +192,6 @@ class ComponentTester extends JComponent {
     private static boolean isMenu = false;
     private static boolean isNext = false;
     private static boolean isSpeaking = false;
-    private static int X = 75;
-    private static int Y = 100;
     private static int cursPos = 0;
     private static int maxPos = 0;
     private static int speechPos = 0;
